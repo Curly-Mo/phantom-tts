@@ -1,20 +1,31 @@
 var TTS = {
+    // Custom serializer since Rhino JSON.stringify is not working
+    serialize: function(object){
+        y='{'
+        for(i in object){
+            reg=RegExp('\'','g')
+            y+=',\''+i.replace(reg,'\\\'')+'\':\''+x[i].replace(reg,'\\\'')+'\''
+        }
+        y=y.replace(',','')
+        y+='}'
+        return y
+    },
     speak: function(sender, text, voice, volume, rate, pitch, lang) {
-      var payload = {
-        sender: sender,
-        text: text,
-        voice: voice,
-        volume: volume,
-        rate: rate,
-        pitch: pitch,
-        lang: lang
-      };
-      var ttsText = '{{tts_token}}' + JSON.stringify(payload);
-      $.panelsocketserver.triggerAudioPanel(ttsText);
+        var payload = {
+          sender: sender,
+          text: text,
+          voice: voice,
+          volume: volume,
+          rate: rate,
+          pitch: pitch,
+          lang: lang
+        };
+        var ttsText = '{{tts_token}}' + TTS.serialize(payload);
+        $.panelsocketserver.triggerAudioPanel(ttsText);
     }
 };
 
-//Adding TTS to PhantomBot
+// Adding TTS to PhantomBot
 (function(){
     var ttsVoice = $.getSetIniDbString('ttsSettings', 'ttsVoice', 'US English Female'),
         ttsVolume = $.getSetIniDbFloat('ttsSettings', 'ttsVolume', 1.00),
