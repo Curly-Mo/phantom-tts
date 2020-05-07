@@ -1,0 +1,10 @@
+$.lang.register('tts.ttsvoice.usage', 'Usage: !ttsvoice [voice].');
+$.lang.register('tts.ttsvoice.set', 'ttsvoice has been set to $1.');
+$.lang.register('tts.ttsvolume.usage', 'Usage: !ttsvolume [volume].');
+$.lang.register('tts.ttsvolume.set', 'ttsvolume has been set to $1.');
+$.lang.register('tts.ttsrate.usage', 'Usage: !ttsrate [rate].');
+$.lang.register('tts.ttsrate.set', 'ttsrate has been set to $1.');
+$.lang.register('tts.ttspitch.usage', 'Usage: !ttspitch [pitch].');
+$.lang.register('tts.ttspitch.set', 'ttspitch has been set to $1.');
+$.lang.register('tts.ttslang.usage', 'Usage: !ttslang [locale-code].');
+$.lang.register('tts.ttslang.set', 'ttslang has been set to $1.');

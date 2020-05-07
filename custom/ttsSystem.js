@@ -1,6 +1,6 @@
-let TTS = {
+var TTS = {
     speak: function(inputText) {
-      let ttsText = "{{tts_token}}" + inputText;
+      var ttsText = '{{tts_token}}' + inputText;
       $.panelsocketserver.triggerAudioPanel(ttsText);
     }
 };
@@ -98,6 +98,19 @@ let TTS = {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttspitch.set', actionFloat));
             }
         }
+
+        /**
+         * @commandpath ttslang [lang] - Language setting for ttsSystem.
+         */
+        if (command.equalsIgnoreCase('ttslang')){
+            if (!actionFloat) {
+                $.say($.whisperPrefix(sender) + $.lang.get('tts.ttslang.usage'));
+            } else {
+                ttsPitch = $.getIniDbFloat('ttsSettings', 'ttsLang', actionFloat);
+                reloadtts();
+                $.say($.whisperPrefix(sender) + $.lang.get('tts.ttslang.set', actionFloat));
+            }
+        }
     });
 
     //Register command.
@@ -108,6 +121,7 @@ let TTS = {
             $.registerChatCommand('./custom/ttsSystem.js','ttsvolume',1);
             $.registerChatCommand('./custom/ttsSystem.js','ttsrate',1);
             $.registerChatCommand('./custom/ttsSystem.js','ttspitch',1);
+            $.registerChatCommand('./custom/ttsSystem.js','ttslang',1);
         }
     });
 
