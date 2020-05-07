@@ -338,28 +338,25 @@ $(function() {
      * @param {Object} json
      */
     function handleTTSHook(json) {
-        let inputText = json.audio_panel_hook.replace("{{tts_token}}", "");
-        // Make sure we can allow audio hooks.
-        if (getOptionSetting('allow-audio-hooks', 'false') === 'true') {
-          let text = inputText.split(',')[0];
-          let voice = 'Google UK English Male';
-          let volume = 1.0;
-          let rate = 1.0;
-          let pitch = 1.0;
-          let lang = 'en-GB';
+        let payload = json.audio_panel_hook.replace("{{tts_token}}", "");
+        let deserialized = JSON.parse(payload);
 
-          let speech = new SpeechSynthesisUtterance(text);
-          let voices = window.speechSynthesis.getVoices();
-          speech.default = false;
-          speech.voice = voices.filter((v) => v.name == voice)[0];
-          speech.lang = lang;
-          speech.volume = volume;
-          speech.rate = rate;
-          speech.pitch = pitch;
-          window.speechSynthesis.speak(speech);
-        } else {
-            isPlaying = false;
-        }
+        let text = deserialized.sender + ' says: ' + deserialized.text;
+        let voice = deserialized.voice;
+        let volume = deserialized.volume;
+        let rate = deserialized.rate;
+        let pitch = deserialized.pitch;
+        let lang = deserialized.lang;
+
+        let speech = new SpeechSynthesisUtterance(text);
+        let voices = window.speechSynthesis.getVoices();
+        speech.voice = voices.filter((v) => v.name == voice)[0];
+        speech.lang = lang;
+        speech.volume = volume;
+        speech.rate = rate;
+        speech.pitch = pitch;
+        console.log(speech);
+        window.speechSynthesis.speak(speech);
     }
 
     /*

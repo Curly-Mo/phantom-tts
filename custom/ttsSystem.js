@@ -1,6 +1,15 @@
 var TTS = {
-    speak: function(inputText) {
-      var ttsText = '{{tts_token}}' + inputText;
+    speak: function(sender, text, voice, volume, rate, pitch, lang) {
+      var payload = {
+        sender: sender,
+        text: text,
+        voice: voice,
+        volume: volume,
+        rate: rate,
+        pitch: pitch,
+        lang: lang
+      };
+      var ttsText = '{{tts_token}}' + JSON.stringify(payload);
       $.panelsocketserver.triggerAudioPanel(ttsText);
     }
 };
@@ -11,7 +20,7 @@ var TTS = {
         ttsVolume = $.getSetIniDbFloat('ttsSettings', 'ttsVolume', 1.00),
         ttsRate = $.getSetIniDbFloat('ttsSettings', 'ttsRate', 1.00),
         ttsPitch = $.getSetIniDbFloat('ttsSettings', 'ttsPitch', 1.00),
-        ttsLang = $.getSetIniDbFloat('ttsSettings', 'ttsLang', "en-GB");
+        ttsLang = $.getSetIniDbFloat('ttsSettings', 'ttsLang', 'en-GB');
 
     /**
      * @function reloadtts
@@ -20,7 +29,8 @@ var TTS = {
         ttsVoice = $.getIniDbString('ttsSettings', 'ttsVoice'),
         ttsVolume = $.getIniDbFloat('ttsSettings', 'ttsVolume'),
         ttsRate = $.getIniDbFloat('ttsSettings', 'ttsRate'),
-        ttsPitch = $.getIniDbFloat('ttsSettings', 'tssPitch');
+        ttsPitch = $.getIniDbFloat('ttsSettings', 'ttsPitch'),
+        ttsLang = $.getIniDbFloat('ttsSettings', 'ttsLang');
     }
 
     /**
@@ -37,13 +47,9 @@ var TTS = {
          * @commandpath tts [message] - Base command for ttsSystem.
          */
         if (command.equalsIgnoreCase('tts')){
-            var ttsText =  sender + ": ";
-            for (i = 0; i < allArgs.length; i++){
-                ttsText += allArgs[i].replace(",", "") + " ";
-            }
-
+            var ttsText = allArgs.join(" ");
             if (action) {
-                TTS.speak(ttsText +','+ ttsVoice +','+ ttsVolume +','+ ttsRate +','+ ttsPitch, +','+ ttsLang);
+                TTS.speak(sender, ttsText, ttsVoice, ttsVolume, ttsRate, ttsPitch, ttsLang);
             }
         }
 
