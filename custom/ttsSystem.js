@@ -5,21 +5,22 @@ let TTS = {
     }
 };
 
-//Adding text to tts to PhantomBot
+//Adding TTS to PhantomBot
 (function(){
-    var textVoice = $.getSetIniDbString('ttsSettings', 'textVoice', 'US English Female'),
-        textVolume = $.getSetIniDbFloat('ttsSettings', 'textVolume', 0.50),
-        textRate = $.getSetIniDbFloat('ttsSettings', 'textRate', 0.95),
-        textPitch = $.getSetIniDbFloat('ttsSettings', 'textPitch', 1.10);
+    var ttsVoice = $.getSetIniDbString('ttsSettings', 'ttsVoice', 'US English Female'),
+        ttsVolume = $.getSetIniDbFloat('ttsSettings', 'ttsVolume', 1.00),
+        ttsRate = $.getSetIniDbFloat('ttsSettings', 'ttsRate', 1.00),
+        ttsPitch = $.getSetIniDbFloat('ttsSettings', 'ttsPitch', 1.00),
+        ttsLang = $.getSetIniDbFloat('ttsSettings', 'ttsLang', "en-GB");
 
     /**
      * @function reloadtts
      */
     function reloadtts() {
-        textVoice = $.getIniDbString('ttsSettings', 'textVoice'),
-        textVolume = $.getIniDbFloat('ttsSettings', 'textVolume'),
-        textRate = $.getIniDbFloat('ttsSettings', 'textRate'),
-        textPitch = $.getIniDbFloat('ttsSettings', 'textPitch');
+        ttsVoice = $.getIniDbString('ttsSettings', 'ttsVoice'),
+        ttsVolume = $.getIniDbFloat('ttsSettings', 'ttsVolume'),
+        ttsRate = $.getIniDbFloat('ttsSettings', 'ttsRate'),
+        ttsPitch = $.getIniDbFloat('ttsSettings', 'tssPitch');
     }
 
     /**
@@ -42,7 +43,7 @@ let TTS = {
             }
 
             if (action) {
-                $.panelsocketserver.triggerTTS(ttsText +','+ textVoice +','+ textVolume +','+ textRate +','+ textPitch);
+                TTS.speak(ttsText +','+ ttsVoice +','+ ttsVolume +','+ ttsRate +','+ ttsPitch, +','+ ttsLang);
             }
         }
 
@@ -53,7 +54,7 @@ let TTS = {
             if (!action) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvoice.usage'));
             } else {
-                textVoice = $.setIniDbString('ttsSettings', 'textVoice', allArgs);
+                ttsVoice = $.setIniDbString('ttsSettings', 'ttsVoice', allArgs);
                 reloadtts();
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvoice.set', allArgs));
             }
@@ -66,7 +67,7 @@ let TTS = {
             if (!actionFloat) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvolume.usage'));
             } else {
-                textVolume = $.getIniDbFloat('ttsSettings', 'textVolume', actionFloat);
+                ttsVolume = $.getIniDbFloat('ttsSettings', 'ttsVolume', actionFloat);
                 reloadtts();
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvolume.set', actionFloat));
             }
@@ -79,7 +80,7 @@ let TTS = {
             if (!actionFloat) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsrate.usage'));
             } else {
-                textRate = $.getIniDbFloat('ttsSettings', 'textRate', actionFloat);
+                ttsRate = $.getIniDbFloat('ttsSettings', 'ttsRate', actionFloat);
                 reloadtts();
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsrate.set', actionFloat));
             }
@@ -92,7 +93,7 @@ let TTS = {
             if (!actionFloat) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttspitch.usage'));
             } else {
-                textPitch = $.getIniDbFloat('ttsSettings', 'textPitch', actionFloat);
+                ttsPitch = $.getIniDbFloat('ttsSettings', 'ttsPitch', actionFloat);
                 reloadtts();
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttspitch.set', actionFloat));
             }
