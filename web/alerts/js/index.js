@@ -356,7 +356,7 @@ $(function() {
         speech.rate = rate;
         speech.pitch = pitch;
         console.log(speech);
-        utterThis.onend = function(event) {
+        speech.onend = function(event) {
           isPlaying = false;
           console.log('Utterance has finished after ' + event.elapsedTime + ' milliseconds.');
         }
