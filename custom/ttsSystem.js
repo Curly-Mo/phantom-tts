@@ -1,10 +1,17 @@
 var TTS = {
     // Custom serializer since Rhino JSON.stringify is not working
     serialize: function(object){
-        y='{'
-        for(i in object){
-            reg=RegExp('\'','g')
-            y+=',\''+i.toString().replace(reg,'\\\'')+'\':\''+object[i].toString().replace(reg,'\\\'')+'\''
+        var y='{'
+        for(key in object){
+            var serializedKey = key;
+            if (typeof key === 'string' || key instanceof String) {
+              serializedKey = "'" + key.replace("'","\\'") + "'";
+            }
+            var serializedValue = object[key];
+            if (typeof object[key] === 'string' || key instanceof String) {
+              serializedValue = "'" + object[key].replace("'","\\'") + "'";
+            }
+            y += "," + serializedKey + ":" + serializedValue;
         }
         y=y.replace(',','')
         y+='}'
