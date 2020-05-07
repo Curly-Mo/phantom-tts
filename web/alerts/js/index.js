@@ -339,14 +339,14 @@ $(function() {
      */
     function handleTTSHook(json) {
         let payload = json.audio_panel_hook.replace("{{tts_token}}", "");
-        let deserialized = JSON.parse(payload);
+        let parsed = JSON.parse(payload);
 
-        let text = deserialized.sender + ' says: ' + deserialized.text;
-        let voice = deserialized.voice;
-        let volume = deserialized.volume;
-        let rate = deserialized.rate;
-        let pitch = deserialized.pitch;
-        let lang = deserialized.lang;
+        let text = parsed.sender.replace('_', '') + ' says: ' + parsed.text;
+        let voice = parsed.voice;
+        let volume = parsed.volume;
+        let rate = parsed.rate;
+        let pitch = parsed.pitch;
+        let lang = parsed.lang;
 
         let speech = new SpeechSynthesisUtterance(text);
         let voices = window.speechSynthesis.getVoices();
@@ -356,7 +356,12 @@ $(function() {
         speech.rate = rate;
         speech.pitch = pitch;
         console.log(speech);
+        utterThis.onend = function(event) {
+          isPlaying = false;
+          console.log('Utterance has finished after ' + event.elapsedTime + ' milliseconds.');
+        }
         window.speechSynthesis.speak(speech);
+
     }
 
     /*
