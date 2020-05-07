@@ -7,9 +7,6 @@ let TTS = {
 
 //Adding text to tts to PhantomBot
 (function(){
-
-  triggerAudioPanel
-
     var textVoice = $.getSetIniDbString('ttsSettings', 'textVoice', 'US English Female'),
         textVolume = $.getSetIniDbFloat('ttsSettings', 'textVolume', 0.50),
         textRate = $.getSetIniDbFloat('ttsSettings', 'textRate', 0.95),
@@ -24,7 +21,7 @@ let TTS = {
         textRate = $.getIniDbFloat('ttsSettings', 'textRate'),
         textPitch = $.getIniDbFloat('ttsSettings', 'textPitch');
     }
-    
+
     /**
      * @event command
      */
@@ -43,7 +40,7 @@ let TTS = {
             for (i = 0; i < allArgs.length; i++){
                 ttsText += allArgs[i].replace(",", "") + " ";
             }
-            
+
             if (action) {
                 $.panelsocketserver.triggerTTS(ttsText +','+ textVoice +','+ textVolume +','+ textRate +','+ textPitch);
             }
