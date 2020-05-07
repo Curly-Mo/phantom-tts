@@ -4,7 +4,7 @@ var TTS = {
         y='{'
         for(i in object){
             reg=RegExp('\'','g')
-            y+=',\''+i.replace(reg,'\\\'')+'\':\''+x[i].replace(reg,'\\\'')+'\''
+            y+=',\''+i.toString().replace(reg,'\\\'')+'\':\''+object[i].toString().replace(reg,'\\\'')+'\''
         }
         y=y.replace(',','')
         y+='}'
