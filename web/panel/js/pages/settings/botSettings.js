@@ -82,7 +82,7 @@ $(function () {
         keys: ['ttsVoice', 'ttsVolume', 'ttsRate', 'ttsPitch', 'ttsLang']
     }, true, function (e) {
         // Update ttsVoice.
-        let voiceNames = window.speechSynthesis.getVoices().map((voice) => voice.name);
+        let voiceNames = speechSynthesis.getVoices().map((voice) => voice.name);
 
         $('#tts')
             .append(helpers.getDropdownGroup('tts-voices', 'TTS Voice', e.ttsVoice, voiceNames, 'Voice name to use for TTS generation.'))

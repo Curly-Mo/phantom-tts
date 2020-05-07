@@ -62,9 +62,9 @@ var TTS = {
             if (!action) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvoice.usage'));
             } else {
-                ttsVoice = $.setIniDbString('ttsSettings', 'ttsVoice', allArgs);
+                ttsVoice = $.setIniDbString('ttsSettings', 'ttsVoice', allArgs.join(" "));
                 reloadtts();
-                $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvoice.set', allArgs));
+                $.say($.whisperPrefix(sender) + $.lang.get('tts.ttsvoice.set', allArgs.join(" ")));
             }
         }
 
