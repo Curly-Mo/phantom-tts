@@ -1,25 +1,9 @@
 var TTS = {
-    // Custom serializer since Rhino JSON.stringify is not working
-    serialize: function(object){
-        var y='{'
-        for(key in object){
-            var serializedKey = key;
-            if (typeof key === 'string' || key instanceof String) {
-              serializedKey = "'" + key.replace("'","\\'") + "'";
-            }
-            var serializedValue = object[key];
-            if (typeof object[key] === 'string' || key instanceof String) {
-              serializedValue = "'" + object[key].replace("'","\\'") + "'";
-            }
-            y += "," + serializedKey + ":" + serializedValue;
-        }
-        y=y.replace(',','')
-        y+='}'
-        return y
-    },
     speak: function(sender, text, voice, volume, rate, pitch, lang) {
+        var senderString = "" + sender;
+        senderString = senderString.replace("_", "");
         var payload = {
-          sender: sender,
+          sender: "" + sender,
           text: text,
           voice: voice,
           volume: volume,
@@ -27,7 +11,7 @@ var TTS = {
           pitch: pitch,
           lang: lang
         };
-        var ttsText = '{{tts_token}}' + TTS.serialize(payload);
+        var ttsText = '{{tts_token}}' + JSON.stringify(payload);
         $.panelsocketserver.triggerAudioPanel(ttsText);
     }
 };
