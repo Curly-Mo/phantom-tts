@@ -20,7 +20,7 @@ var TTS = {
         ttsVolume = $.getSetIniDbFloat('ttsSettings', 'ttsVolume', 1.00),
         ttsRate = $.getSetIniDbFloat('ttsSettings', 'ttsRate', 1.00),
         ttsPitch = $.getSetIniDbFloat('ttsSettings', 'ttsPitch', 1.00),
-        ttsLang = $.getSetIniDbFloat('ttsSettings', 'ttsLang', 'en-GB');
+        ttsLang = $.getSetIniDbString('ttsSettings', 'ttsLang', 'en-GB');
 
     /**
      * @function reloadtts
@@ -30,7 +30,7 @@ var TTS = {
         ttsVolume = $.getIniDbFloat('ttsSettings', 'ttsVolume'),
         ttsRate = $.getIniDbFloat('ttsSettings', 'ttsRate'),
         ttsPitch = $.getIniDbFloat('ttsSettings', 'ttsPitch'),
-        ttsLang = $.getIniDbFloat('ttsSettings', 'ttsLang');
+        ttsLang = $.getIniDbString('ttsSettings', 'ttsLang');
     }
 
     /**
@@ -112,7 +112,7 @@ var TTS = {
             if (!actionFloat) {
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttslang.usage'));
             } else {
-                ttsPitch = $.getIniDbFloat('ttsSettings', 'ttsLang', actionFloat);
+                ttsLang = $.getIniDbString('ttsSettings', 'ttsLang', action);
                 reloadtts();
                 $.say($.whisperPrefix(sender) + $.lang.get('tts.ttslang.set', actionFloat));
             }
