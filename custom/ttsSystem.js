@@ -51,6 +51,7 @@ var TTS = {
         if (command.equalsIgnoreCase('tts')){
             var ttsText = allArgs.join(" ");
             if (action) {
+                reloadtts();
                 TTS.speak(sender, ttsText, ttsVoice, ttsVolume, ttsRate, ttsPitch, ttsLang);
             }
         }
