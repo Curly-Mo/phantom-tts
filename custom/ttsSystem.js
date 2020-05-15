@@ -1,9 +1,7 @@
 var TTS = {
     speak: function(sender, text, voice, volume, rate, pitch, lang) {
-        var senderString = "" + sender;
-        senderString = senderString.replace("_", "");
         var payload = {
-          sender: "" + sender,
+          sender: sender,
           text: text,
           voice: voice,
           volume: volume,
@@ -52,7 +50,7 @@ var TTS = {
             var ttsText = allArgs.join(" ");
             if (action) {
                 reloadtts();
-                TTS.speak(sender, ttsText, ttsVoice, ttsVolume, ttsRate, ttsPitch, ttsLang);
+                TTS.speak("" + sender, ttsText, ttsVoice, ttsVolume, ttsRate, ttsPitch, ttsLang);
             }
         }
 

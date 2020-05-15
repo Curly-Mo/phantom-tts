@@ -332,6 +332,28 @@ $(function() {
         }
     }
 
+
+    /*
+     * @function Very naive text sanitation
+     *
+     * @param {String} text
+     */
+    function sanitizeText(text) {
+        let words = text.split(" ");
+        let result = [];
+        for (let i = 0; i < words.length; i++) {
+            let word = words[i];
+            if(word == words[i-1] && word == words[i-2] && word == words[i-3]) {
+              while(word == words[i+1]) {
+                i++;
+              }
+              word = "etc.";
+            }
+            result.push(word);
+        }
+        return result.join(" ");
+    }
+
     /*
      * @function Handles text to speech hooks.
      *
@@ -341,7 +363,7 @@ $(function() {
         let payload = json.audio_panel_hook.replace("{{tts_token}}", "");
         let parsed = JSON.parse(payload);
 
-        let text = parsed.sender.replace('_', '') + ' says: ' + parsed.text;
+        let text = parsed.sender.replace('_', '') + ' says: ' + sanitizeText(parsed.text);
         let voice = parsed.voice;
         let volume = parsed.volume;
         let rate = parsed.rate;
@@ -360,6 +382,7 @@ $(function() {
           isPlaying = false;
           console.log('Utterance has finished after ' + event.elapsedTime + ' milliseconds.');
         }
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(speech);
 
     }
